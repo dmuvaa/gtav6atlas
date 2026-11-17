@@ -1,16 +1,44 @@
 import Link from "next/link";
+import { SiteLogo } from "@/components/layout/SiteLogo";
 import { Container } from "@/components/ui/Container";
-import { COPYRIGHT_YEAR, SITE_NAME } from "@/lib/constants";
+import {
+  CONTACT_EMAIL,
+  COPYRIGHT_YEAR,
+  LEGAL_LAST_UPDATED,
+  LEGAL_LAST_UPDATED_ISO,
+  SITE_NAME,
+} from "@/lib/constants";
 
-const footerLinks = [
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-  { href: "/editorial-policy", label: "Editorial policy" },
-  { href: "/privacy", label: "Privacy" },
-  { href: "/terms", label: "Terms" },
-  { href: "/newsletter", label: "Newsletter" },
-  { href: "/editions", label: "Edition gallery" },
-];
+const FOOTER_GROUPS = [
+  {
+    title: "Explore",
+    links: [
+      { href: "/characters", label: "Characters" },
+      { href: "/locations", label: "Locations" },
+      { href: "/vehicles", label: "Vehicles" },
+      { href: "/guides", label: "Guides" },
+      { href: "/search", label: "Search" },
+    ],
+  },
+  {
+    title: "Site",
+    links: [
+      { href: "/about", label: "About" },
+      { href: "/contact", label: "Contact" },
+      { href: "/newsletter", label: "Newsletter" },
+      { href: "/editions", label: "Edition gallery" },
+      { href: "/maps", label: "Maps" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/privacy", label: "Privacy policy" },
+      { href: "/terms", label: "Terms of use" },
+      { href: "/editorial-policy", label: "Editorial policy" },
+    ],
+  },
+] as const;
 
 export function SiteFooter() {
   return (
@@ -19,36 +47,66 @@ export function SiteFooter() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-vi-pink-bright to-transparent opacity-80"
         aria-hidden
       />
-      <Container className="py-12">
-        <div className="grid gap-10 md:grid-cols-2">
+      <Container className="py-12 lg:py-14">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)] lg:gap-16">
           <div>
-            <p className="text-lg font-semibold text-foreground">{SITE_NAME}</p>
-            <p className="mt-2 max-w-md text-sm text-muted leading-relaxed">
-              Independent GTA VI knowledge platform. Not affiliated with,
-              endorsed by or sponsored by Rockstar Games or Take-Two
-              Interactive.
+            <SiteLogo compact />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+              Independent Grand Theft Auto VI reference — structured directories,
+              guides, and verification labels for players, researchers, and
+              creators.
+            </p>
+            <p className="mt-4 max-w-sm text-xs leading-relaxed text-muted">
+              Not affiliated with, endorsed by, or sponsored by Rockstar Games or
+              Take-Two Interactive. Grand Theft Auto and related marks are
+              trademarks of their respective owners.
+            </p>
+            <p className="mt-4 text-sm text-muted">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-medium text-vi-pink-bright hover:text-foreground"
+              >
+                {CONTACT_EMAIL}
+              </a>
             </p>
           </div>
-          <nav aria-label="Footer">
-            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {footerLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+          <nav
+            className="grid gap-8 sm:grid-cols-3"
+            aria-label="Footer navigation"
+          >
+            {FOOTER_GROUPS.map((group) => (
+              <div key={group.title}>
+                <h2 className="font-mono text-[10px] font-medium uppercase tracking-widest text-vi-pink-bright">
+                  {group.title}
+                </h2>
+                <ul className="mt-3 space-y-2">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-muted transition-colors hover:text-foreground"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </nav>
         </div>
-        <p className="mt-10 border-t border-border pt-6 text-xs text-muted">
-          © {COPYRIGHT_YEAR} {SITE_NAME}. Grand Theft Auto and
-          related marks are trademarks of their respective owners. Fan project
-          for informational purposes.
-        </p>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {COPYRIGHT_YEAR} {SITE_NAME}. Fan project for informational
+            purposes only.
+          </p>
+          <p>
+            Policies updated{" "}
+            <time dateTime={LEGAL_LAST_UPDATED_ISO}>{LEGAL_LAST_UPDATED}</time>
+          </p>
+        </div>
       </Container>
     </footer>
   );

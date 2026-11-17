@@ -7,6 +7,13 @@ export const SITE_URL =
 export const SITE_DESCRIPTION =
   "Independent Grand Theft Auto VI information hub — structured databases, guides, news and exploration tools for players, enthusiasts and creators.";
 
+export const CONTACT_EMAIL = "hello@gta6atlashq.com";
+export const PRIVACY_EMAIL = "privacy@gta6atlashq.com";
+
+/** Shown on legal pages and footer. */
+export const LEGAL_LAST_UPDATED = "November 17, 2026";
+export const LEGAL_LAST_UPDATED_ISO = "2026-11-17";
+
 export const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/maps", label: "Maps" },
