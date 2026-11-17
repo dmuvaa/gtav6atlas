@@ -1,26 +1,264 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* GTA VI marketing pink-first (fan palette; not official assets) */
+  --vi-pink: #ff2d95;
+  --vi-pink-bright: #ff5cad;
+  --vi-pink-deep: #c9186e;
+  --vi-magenta: #e91e8c;
+  --vi-purple: #4a1942;
+  --vi-sunset: #ff8c4a;
+
+  --bg-main: #0a050c;
+  --bg-secondary: #150a18;
+  --bg-card: #1d1024;
+  --bg-elevated: #271530;
+  --text-primary: #fff5fa;
+  --text-secondary: #c4a8bc;
+  --neon-pink: var(--vi-pink);
+  --neon-coral: var(--vi-sunset);
+  --vice-teal: #3ee9c7;
+  --sunset-gold: #ffb84d;
+  --accent-primary: var(--vi-pink);
+  --accent-secondary: var(--vi-magenta);
+  --border: rgba(255, 45, 149, 0.14);
+  --border-bright: rgba(255, 45, 149, 0.45);
+  --success: #3ee9a0;
+  --warning: #ffb84d;
+  --error: #ff6b7a;
+  --glow-pink: rgba(255, 45, 149, 0.45);
+  --glow-pink-soft: rgba(255, 92, 173, 0.25);
+  --glow-teal: rgba(62, 233, 199, 0.2);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--bg-main);
+  --color-foreground: var(--text-primary);
+  --color-muted: var(--text-secondary);
+  --color-card: var(--bg-card);
+  --color-surface: var(--bg-secondary);
+  --color-elevated: var(--bg-elevated);
+  --color-border: var(--border);
+  --color-accent: var(--accent-primary);
+  --color-accent-muted: var(--accent-secondary);
+  --color-accent-teal: var(--vice-teal);
+  --color-accent-coral: var(--neon-coral);
+  --color-accent-gold: var(--sunset-gold);
+  --color-vi-pink: var(--vi-pink);
+  --color-vi-pink-bright: var(--vi-pink-bright);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-oswald);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--vi-pink) 45%, transparent);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--vi-pink-bright);
+  outline-offset: 2px;
+}
+
+.font-display {
+  font-family: var(--font-oswald), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Leonida atmosphere — pink / magenta / sunset (teal only as distant water accent) */
+.atlas-sky {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% -10%, rgba(255, 45, 149, 0.28), transparent 58%),
+    radial-gradient(ellipse 80% 50% at 100% 30%, rgba(233, 30, 140, 0.18), transparent 50%),
+    radial-gradient(ellipse 70% 45% at 0% 60%, rgba(255, 140, 74, 0.12), transparent 48%),
+    radial-gradient(ellipse 55% 35% at 80% 90%, rgba(62, 233, 199, 0.06), transparent 45%),
+    radial-gradient(ellipse 60% 40% at 20% 100%, rgba(74, 25, 66, 0.5), transparent 55%),
+    var(--bg-main);
+}
+
+.atlas-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.text-gradient-vi {
+  background: linear-gradient(
+    120deg,
+    var(--vi-pink-bright) 0%,
+    var(--vi-pink) 35%,
+    var(--vi-magenta) 70%,
+    var(--vi-sunset) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-vi-6 {
+  color: var(--vi-pink-bright);
+  text-shadow: 0 0 28px var(--glow-pink-soft);
+}
+
+.border-gradient-vi {
+  border-image: linear-gradient(
+      135deg,
+      rgba(255, 45, 149, 0.75),
+      rgba(233, 30, 140, 0.45),
+      rgba(255, 184, 77, 0.35)
+    )
+    1;
+}
+
+.card-leonida {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--bg-card) 88%, var(--vi-pink) 12%) 0%,
+    var(--bg-card) 45%,
+    color-mix(in srgb, var(--bg-card) 94%, var(--vi-magenta) 6%) 100%
+  );
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--vi-pink-bright), var(--vi-pink-deep));
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 20px var(--glow-pink-soft);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 8px 36px var(--glow-pink);
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-bright);
+  background: color-mix(in srgb, var(--bg-card) 75%, transparent);
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--vi-pink-bright);
+  box-shadow: 0 0 28px var(--glow-pink-soft);
+}
+
+.prose-atlas {
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.prose-atlas h2 {
+  color: var(--text-primary);
+  font-family: var(--font-oswald), sans-serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-atlas p {
+  margin-bottom: 1rem;
+}
+
+.prose-atlas a {
+  color: var(--vi-pink-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-atlas ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.hero-keyart-overlay {
+  background: linear-gradient(
+      105deg,
+      rgba(10, 5, 12, 0.92) 0%,
+      rgba(45, 10, 35, 0.82) 42%,
+      rgba(10, 5, 12, 0.55) 100%
+    ),
+    linear-gradient(to top, var(--bg-main) 0%, transparent 55%),
+    linear-gradient(
+      180deg,
+      rgba(255, 45, 149, 0.18) 0%,
+      transparent 40%
+    );
+}
+
+/* Hero orbital gallery — ring spins, thumbs stay upright */
+.orbit-ring {
+  animation: ring-rotate 55s linear infinite;
+}
+
+.orbit-ring.orbit-paused {
+  animation-play-state: paused;
+}
+
+.orbit-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5.5rem;
+  height: 3.5rem;
+  margin-left: -2.75rem;
+  margin-top: -1.75rem;
+  transform: rotate(calc(360deg / var(--orbit-n) * var(--orbit-i)))
+    translateY(calc(-1 * min(38vw, 210px)));
+}
+
+.orbit-thumb {
+  animation: thumb-upright 55s linear infinite;
+  transform-origin: center center;
+}
+
+.orbit-ring.orbit-paused .orbit-thumb {
+  animation-play-state: paused;
+}
+
+@keyframes ring-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes thumb-upright {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover {
+    transform: none;
+  }
+  .orbit-ring,
+  .orbit-thumb {
+    animation: none !important;
+  }
 }

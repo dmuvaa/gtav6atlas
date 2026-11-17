@@ -1,0 +1,2 @@
+-- Run after install-continue.sql (001 + 002 + 003 already applied)
+-- Copy/paste contents of migrations/005_storage_maps_editor_rls.sql in SQL Editor
